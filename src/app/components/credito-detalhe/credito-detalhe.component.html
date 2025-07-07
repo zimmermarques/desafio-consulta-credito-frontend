@@ -1,0 +1,18 @@
+
+<div class="mt-4">
+  <h5>Detalhes do Crédito</h5>
+  <div class="card">
+    <div class="card-body">
+      <p><strong>Número do Crédito:</strong> {{ dado?.numeroCredito}}</p>
+      <p><strong>Número da NFS-e:</strong> {{ dado?.numeroNfse }}</p>
+      <p><strong>Data de Constituição:</strong> {{ dado?.dataConstituicao | date: 'shortDate' }}</p>
+      <p><strong>Tipo de Crédito:</strong> {{ dado?.tipoCredito }}</p>
+      <p><strong>Simples Nacional:</strong> {{ dado?.simplesNacional }}</p>
+      <p><strong>Alíquota:</strong> {{ dado?.aliquota }}%</p>
+      <p><strong>Valor Faturado:</strong> {{ dado?.valorFaturado | currency:'BRL' }}</p>
+      <p><strong>Valor Dedução:</strong> {{ dado?.valorDeducao | currency:'BRL' }}</p>
+      <p><strong>Base de Cálculo:</strong> {{ dado?.baseCalculo | currency:'BRL' }}</p>
+      <p><strong>Valor ISSQN:</strong> {{ dado?.valorIssqn | currency:'BRL' }}</p>
+    </div>
+  </div>
+</div>

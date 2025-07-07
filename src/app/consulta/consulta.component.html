@@ -1,0 +1,115 @@
+<div class="container-fluid p-3">
+  <h2 class="mb-4 text-center text-md-start">Consulta NFS-e / Crédito</h2>
+
+  <form (ngSubmit)="buscar()" class="mb-4">
+    <div class="row">
+      <!-- Radio buttons -->
+      <div class="col-12 col-md-6 mb-3">
+        <label class="form-label me-3 d-block">Buscar por:</label>
+
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="buscarNfse"
+            name="tipoBusca"
+            [(ngModel)]="tipoBusca"
+            [value]="'nfse'"
+            (click)="limparConsulta()"
+          />
+          <label class="form-check-label" for="buscarNfse">NFS-e</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="buscarCredito"
+            name="tipoBusca"
+            [(ngModel)]="tipoBusca"
+            [value]="'credito'"
+            (click)="limparConsulta()"
+          />
+          <label class="form-check-label" for="buscarCredito">Crédito</label>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="row">
+      <!-- Campo de busca -->
+      <div class="col-12 col-md-6 mb-3">
+        <label for="valorBusca" class="form-label">
+          {{ tipoBusca === 'nfse' ? 'Número da NFS-e' : 'Número do Crédito' }}
+        </label>
+        <input
+          type="text"
+          id="valorBusca"
+          class="form-control"
+          [(ngModel)]="valorBusca"
+          name="valorBusca"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-left text-md-start">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Detalhe do crédito -->
+  <app-credito-detalhe
+    *ngIf="resultadoDetalhado && tipoBusca == 'credito'"
+    [dado]="resultadoDetalhado"
+  ></app-credito-detalhe>
+
+  <!-- Tabela NFS-e -->
+  <div
+    *ngIf="resultadosTabela && tipoBusca == 'nfse'"
+    class="table-responsive"
+  >
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>NFS-e</th>
+          <th>N.Crédito</th>
+          <th>Data Constituição</th>
+          <th>Tipo</th>
+          <th>Simples Nacional</th>
+          <th>Alíquota(%)</th>
+          <th>Valor Faturado</th>
+          <th>Valor Dedução</th>
+          <th>Base de Cálculo</th>
+          <th>Valor ISSQN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of resultadosTabela">
+          <td>{{ item.numeroNfse }}</td>
+          <td>{{ item.numeroCredito }}</td>
+          <td>{{ item.dataConstituicao | date: 'shortDate' }}</td>
+          <td>{{ item.tipoCredito }}</td>
+          <td>{{ item.simplesNacional }}</td>
+          <td>{{ item.aliquota }}%</td>
+          <td>{{ item.valorFaturado | currency: 'BRL' }}</td>
+          <td>{{ item.valorDeducao | currency: 'BRL' }}</td>
+          <td>{{ item.baseCalculo | currency: 'BRL' }}</td>
+          <td>{{ item.valorIssqn | currency: 'BRL' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Painel de loading -->
+  <div
+    *ngIf="loading"
+    class="loading-overlay d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+</div>
