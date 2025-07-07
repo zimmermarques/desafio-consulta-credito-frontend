@@ -2,5 +2,5 @@
 
 export const Environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api', // vai ser substituído
+  apiUrl: '${API_URL}', // vai ser substituído
 };
